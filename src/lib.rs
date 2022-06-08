@@ -169,7 +169,7 @@ impl SmartEvent {
       //getting the user index
       let user = &mut self.users[user_ind];
       //matching if the username at the index is equal to entered user
-      if user.name == username {
+      if user.username == username {
         match self.events.get_mut(&eventname) {
           Some(event) => {
             event.add_user_to_event(user.clone());
