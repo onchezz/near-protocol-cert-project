@@ -96,14 +96,7 @@ impl SmartEvent {
   }
 
   // Public method to count events
-  pub fn count_events(&self) -> usize {
-    self.events.len()
-  }
-
-  // Public method to count users
-  pub fn count_users(&self) -> usize {
-    self.users.len()
-  }
+ 
 
   // Public method to create events and save them in a vector
   pub fn create_event(
@@ -124,6 +117,15 @@ impl SmartEvent {
     SuccefullMsg(format!("{}: Event was created succesfully", &event))
   }
 
+  pub fn count_events(&self) -> usize {
+    self.events.len()
+  }
+
+  // Public method to count users
+  pub fn count_users(&self) -> usize {
+    self.users.len()
+  }
+
   // Methods to display events
   pub fn show_events(&mut self) -> Vec<&Event> {
     let events = self.events.iter().map(|e| e.1).collect();
@@ -137,7 +139,7 @@ impl SmartEvent {
     SuccefullMsg("User Created Succesfully".to_string())
   }
   // Method to display users
-  pub fn get_users(&self) -> &Vec<User> {
+  pub fn view_users(&self) -> &Vec<User> {
     &self.users
   }
 
@@ -185,8 +187,8 @@ impl SmartEvent {
     Err(ContractErr("Failed".to_string()))
   }
 
-  pub fn view_users_in_event(&self, event_id: &String) -> Result<&Vec<User>, ContractErr> {
-    match self.events.get(event_id) {
+  pub fn view_users_in_event(&self, eventname: &String) -> Result<&Vec<User>, ContractErr> {
+    match self.events.get(eventname) {
       Some(e) => Ok(&e.view_users_in_event()),
       None => Err(ContractErr(
         "Failed to get users for that event".to_string(),
@@ -254,7 +256,7 @@ mod tests {
       "wagole@gmail.com".to_string(),
     );
 
-    let count = contract.get_users();
+    let count = contract.view_users();
     assert_eq!(count.len(), 2);
   }
 }
